@@ -8,4 +8,8 @@ These assignments rely on the SimpleWebServer program. Each gets graded using ta
 This assignment relies on the Coverage programs. 
 
 ## Program 4
-This assignment relies on the Circles programs. 
+This assignment relies on the Circles programs.
+
+## Lab 1: Initial Git
+This assignment addresses initial git setup and organization of file structures and simple git commands. 
+GitHub Username: tai-pan1841
