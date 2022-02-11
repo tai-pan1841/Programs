@@ -38,9 +38,9 @@ import java.util.Scanner;
 
 public class WebWorker implements Runnable
 {
-	private String path; 
+	private String path; //variable that designates file path
 	private Socket socket;
-	private String line;
+	private String line; //variables for reading in lines and correctly parsing
 	private String resp = " ";
 
 	/**
@@ -83,7 +83,7 @@ public class WebWorker implements Runnable
 				fileFound = false; 
 			}
 			
-			if (fileFound)
+			if (fileFound) //file found provide 200 code O.K. and post the file
 			{
 				code = 200;
 				message = "O.K.";
@@ -91,15 +91,12 @@ public class WebWorker implements Runnable
 				writeContent(os, bufferedReader); 
 				
 			}
-			else
+			else //provides error code upon not finding file. 
 			{
 				code = 404; 
 				message = "File Not Found";
 				writeHTTPHeader(os, "text/html", code, message);
 			}
-			// if (path != False)
-			//i read in the file, if found give it to writeHTTP and write content, 
-			//if not provide a error html to say its not available and send writeHTTP that it can't be found to send a 404 error
 			
 			os.flush();
 			socket.close();
@@ -161,7 +158,7 @@ public class WebWorker implements Runnable
 	 * @param contentType
 	 *          is the string MIME content type (e.g. "text/html")
 	 **/
-	private void writeHTTPHeader(OutputStream os, String contentType, int code, String message) throws Exception
+	private void writeHTTPHeader(OutputStream os, String contentType, int code, String message) throws Exception //writeHTTPHeader changed to receive variables that provide corresponding codes and messages. 
 	{   //these lines are what are changed when the file is requested and found successfully or not found. 
 		Date d = new Date();
 		DateFormat df = DateFormat.getDateTimeInstance();
@@ -170,7 +167,7 @@ public class WebWorker implements Runnable
 		os.write("Date: ".getBytes());
 		os.write((df.format(d)).getBytes());
 		os.write("\n".getBytes());
-		os.write("Server: Jon's very own server\n".getBytes());
+		os.write("Server: The Tai-Pan's very own server\n".getBytes());
 		// os.write("Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT\n".getBytes());
 		// os.write("Content-Length: 438\n".getBytes());
 		os.write("Connection: close\n".getBytes());
@@ -187,7 +184,7 @@ public class WebWorker implements Runnable
 	 * @param os
 	 *          is the OutputStream object to write to
 	 **/
-	private void writeContent(OutputStream os, BufferedReader bufferedReader) throws Exception 
+	private void writeContent(OutputStream os, BufferedReader bufferedReader) throws Exception  //error messages
 	{
 		if (bufferedReader == null)
 			{

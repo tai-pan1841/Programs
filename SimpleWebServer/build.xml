@@ -1,38 +1,22 @@
-<project name="SimpleWebServer" default="dist" basedir=".">
-  <description>
-  A Simple Web Server for SW Dev
-  </description>
-  <!-- set global properties for this build -->
-  <property name="src" location="Programs\SimpleWebServer\src\edu\nmsu\cs\webserver\WebServer.java"/>
-  <property name="build" location="SimpleWebServer\src\edu\nmsu\cs\bin\edu\nmsu\cs\webserver\WebServer.class"/>
-  <property name="dist" location="SimpleWebServer"/>
+<project name = "Simple Web Server" basedir = ".">
+<description>
+  build for SimpleWeb Server
+</description>
 
-  <target name="init">
-    <!-- Create the time stamp -->
-    <tstamp/>
-    <!-- Create the build directory structure used by compile -->
+<property name = "src" location = "src/"/>
+<property name = "build" location = "bin/"/>
+
+<target name="build">
     <mkdir dir="${build}"/>
+    <javac srcdir = "${src}" destdir = "${build}"/>
   </target>
 
-  <target name="compile" depends="init"
-        description="compile the source">
-    <!-- Compile the Java code from ${src} into ${build} -->
-    <javac srcdir="${src}" destdir="${build}"/>
-  </target>
+<target name = "compile" description = "initial compilation">
+<javac srcdir = "${src}" destdir = "${build}" />
+</target>
 
-  <target name="dist" depends="compile"
-        description="generate the distribution">
-    <!-- Create the distribution directory -->
-    <mkdir dir="${dist}/lib"/>
 
-    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}SimpleWebServer/${DSTAMP}.jar" basedir="${build}"/>
-  </target>
-
-  <target name="clean"
-        description="clean up">
-    <!-- Delete the ${build} and ${dist} directory trees -->
-    <delete dir="${build}"/>
-    <delete dir="${dist}"/>
-  </target>
+<target name = "run" depends = "build">
+<java classname = "edu.nmsu.cs.webserver.WebServer"  classpath = "${build}" />
+</target>
 </project>
