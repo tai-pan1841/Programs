@@ -1,16 +1,19 @@
-<project name = "Simple Web Server" basedir = ".">
+<project name = "SimpleWebServer" cefault = "dist" basedir = ".">
 <description>
   build for SimpleWeb Server
 </description>
 
 <property name = "src" location = "src/"/>
 <property name = "build" location = "bin/"/>
+<property name = "dist" location = "dist"/>
 
   
 <target name = "ant" depends = "run,build,compile">
   <mkdir dir = "${build}"/>
   <javac srcdir = "${src}" destdir = "${build"/>
   </target>
+  
+ 
   
 <target name="build">
     <mkdir dir="${build}"/>
@@ -25,9 +28,16 @@
 <target name = "run" depends = "build">
 <java classname = "edu.nmsu.cs.webserver.WebServer"  classpath = "${build}" />
 </target>
+  
+ <target name = "dist" depends = "compile"
+   <mkdir dir = "${dist}/lib"/>
+  
+<jar jarfile = "${dist}/lib/SimpleWebServer-${DSTAMP}.jar" basedir = "${build}"/>
+  </target>
 
 <target name = "clean">
   <delete dir = "${build.dir}"/>
+  <delete dir = "${dist}"/>
   </target>
   
 </project>
