@@ -19,4 +19,9 @@
 <target name = "run" depends = "build">
 <java classname = "edu.nmsu.cs.webserver.WebServer"  classpath = "${build}" />
 </target>
+
+<target name = "clean">
+  <delete dir = "${build.dir}"/>
+  </target>
+  
 </project>

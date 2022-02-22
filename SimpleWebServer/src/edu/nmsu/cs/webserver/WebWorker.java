@@ -23,6 +23,8 @@ package edu.nmsu.cs.webserver;
 
  //IMPORTANT NOTE: All added code to SimpleWebServer was written by me, however I was aided by Dr. Bill Hamilton
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -42,6 +44,7 @@ public class WebWorker implements Runnable
 	private Socket socket;
 	private String line; //variables for reading in lines and correctly parsing
 	private String resp = " ";
+	private byte readArray[] = new byte[128]; 
 
 	/**
 	 * Constructor: must have a valid open socket
@@ -74,6 +77,7 @@ public class WebWorker implements Runnable
 			System.out.println(path); // test path
 			File myObj = new File(path);
 			BufferedReader bufferedReader = null;
+			DataInputStream dataIO = new DataInputStream(new FileInputStream(myObj));
 			try
 			{
 			bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(myObj)));
@@ -87,8 +91,9 @@ public class WebWorker implements Runnable
 			{
 				code = 200;
 				message = "O.K.";
-				writeHTTPHeader(os, "text/html", code, message); //sends the response back to client
-				writeContent(os, bufferedReader); 
+				writeHTTPHeader(os, "image/jpeg", code, message); //sends the response back to client
+				writeHTTPHeader(os, "image/PNG", code, message);
+				writeContent(os, dataIO); 
 				
 			}
 			else //provides error code upon not finding file. 
@@ -184,9 +189,12 @@ public class WebWorker implements Runnable
 	 * @param os
 	 *          is the OutputStream object to write to
 	 **/
-	private void writeContent(OutputStream os, BufferedReader bufferedReader) throws Exception  //error messages
+	private void writeContent(OutputStream os, DataInputStream io) throws Exception  //error messages
 	{
-		if (bufferedReader == null)
+	 int numBytesRead = 0; 
+	 
+
+		if (io == null)
 			{
 				os.write("<html><head></head><body>\n".getBytes());
 				os.write("<h3> ERROR 404: File Not Found</h3>\n".getBytes());
@@ -194,13 +202,13 @@ public class WebWorker implements Runnable
 			} 
 		else
 		{
-			while ((line = bufferedReader.readLine()) != null)
+			numBytesRead = io.read(readArray); 
+			while (numBytesRead != -1)
 			{
-				System.out.println(line);
-				resp += line;
+				os.write(readArray, 0, numBytesRead);
+				numBytesRead = io.read(readArray); //continues to execute while the condition is true, when false it stops
 			}
-			bufferedReader.close();
-			os.write(resp.getBytes());
+			io.close();
 		}
 		//buffered reader to pull in java file and shunt contents out to the server
 		//send file or text saying it cant be found 
