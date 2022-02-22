@@ -1,4 +1,4 @@
-<project name = "SimpleWebServer" cefault = "dist" basedir = ".">
+<project name = "SimpleWebServer" default = "dist" basedir = ".">
 <description>
   build for SimpleWeb Server
 </description>
