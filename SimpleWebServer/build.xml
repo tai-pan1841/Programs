@@ -7,7 +7,7 @@
 <property name = "build" location = "bin/"/>
 
   
-<target name = "ant" depends = "run,build,compile"/>
+<target name = "ant" depends = "run,build,compile">
   <mkdir dir = "${build}"/>
   <javac srcdir = "${src}" destdir = "${build"/>
   </target>
