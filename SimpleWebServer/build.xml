@@ -6,21 +6,20 @@
   <property name="src" location="src"/>
   <property name="bin" location="bin"/>
   <property name="dist" location="dist"/>
-  <property name = "workingDir" location = "www"/>
+  <!-- <property name = "workingDir" location = "www"/> -->
 
-  <target name="init">
-    <!-- Create the time stamp -->
-    <tstamp/>
+  <!-- <target name="init">
+     Create the time stamp -->
+    <!-- <tstamp/> -->
     <!-- Create the bin directory structure used by compile -->
-    <mkdir dir="${bin}"/>
-  </target>
+    <!-- <mkdir dir="${bin}"/> -->
+  <!-- </target> -->
 
-  <target name="compile" depends="init"
-        description="compile the source">
+  <target name="compile">
     <!-- Compile the Java code from ${src} into ${bin} -->
+    <mkdir dir = "${bin}" />
     <javac srcdir="${src}" destdir="${bin}"/>
-        <java classname = "edu.nmsu.cs.webserver.WebServer"  classpath = "${bin}" dir = "${workingDir}" />
-
+        <java classname = "edu.nmsu.cs.webserver.WebServer"  classpath = "${bin}" />
   </target>
 
 

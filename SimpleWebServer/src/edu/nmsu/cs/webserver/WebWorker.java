@@ -63,6 +63,7 @@ public class WebWorker implements Runnable
 	{
 		System.err.println("Handling connection...");
 		System.out.println(path); 
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
 		try
 		{
@@ -73,14 +74,13 @@ public class WebWorker implements Runnable
 			String message;
 			readHTTPRequest(is); //browser makes request
 			// ./rec/acc/test.html 
-			path = "SimpleWebServer" + path; 
+			path = "." + path; 
 			System.out.println(path); // test path
 			File myObj = new File(path);
-			BufferedReader bufferedReader = null;
-			DataInputStream dataIO = new DataInputStream(new FileInputStream(myObj));
+			DataInputStream dataIO = null;
 			try
 			{
-			bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(myObj)));
+			dataIO = new DataInputStream((new FileInputStream(myObj)));
 			}
 			catch (FileNotFoundException x)
 			{
@@ -92,7 +92,7 @@ public class WebWorker implements Runnable
 				code = 200;
 				message = "O.K.";
 				writeHTTPHeader(os, "image/jpeg", code, message); //sends the response back to client
-				writeHTTPHeader(os, "image/PNG", code, message);
+
 				writeContent(os, dataIO); 
 				
 			}
