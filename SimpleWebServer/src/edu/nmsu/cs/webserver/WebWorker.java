@@ -77,7 +77,7 @@ public class WebWorker implements Runnable
 			path = "." + path; 
 			System.out.println(path); // test path
 			File myObj = new File(path);
-			DataInputStream dataIO = null;
+			DataInputStream dataIO = null; //changed buffered reader to datainput stream
 			try
 			{
 			dataIO = new DataInputStream((new FileInputStream(myObj)));
@@ -91,8 +91,13 @@ public class WebWorker implements Runnable
 			{
 				code = 200;
 				message = "O.K.";
-				writeHTTPHeader(os, "image/jpeg", code, message); //sends the response back to client
-
+				if (path.contains("jpg"))
+				{
+				writeHTTPHeader(os, "image/jpeg", code, message); //receive either jpeg 
+				}
+				else {
+					writeHTTPHeader(os, "image/png", code, message); //or png
+					}
 				writeContent(os, dataIO); 
 				
 			}
@@ -200,7 +205,7 @@ public class WebWorker implements Runnable
 				os.write("<h3> ERROR 404: File Not Found</h3>\n".getBytes());
 				os.write("</body></html>\n".getBytes()); 
 			} 
-		else
+		else //reads bytes into readArray and while numBytesRead != -1, continue to write readArray to outputstream. 
 		{
 			numBytesRead = io.read(readArray); 
 			while (numBytesRead != -1)
@@ -210,7 +215,7 @@ public class WebWorker implements Runnable
 			}
 			io.close();
 		}
-		//buffered reader to pull in java file and shunt contents out to the server
+		
 		//send file or text saying it cant be found 
 	}
 
