@@ -47,11 +47,7 @@ public class RacingScore2
 			s1 = score1;
 			s2 = score2;
 		}
-		else if (score3 < score1 && score3 < score2)
-		{
-			s1 = score1;
-			s2 = score2;
-		}
+		
 		else
 		{
 			s1 = 99;
@@ -64,7 +60,7 @@ public class RacingScore2
 	public static void main(String args[])
 	{
 		int s1, s2, s3;
-		if (args == null || args.length != 3)
+		if (args.length != 3)
 		{
 			System.err.println("Error: must supply three arguments!");
 			return;
@@ -80,7 +76,7 @@ public class RacingScore2
 			System.err.println("Error: arguments must be integers!");
 			return;
 		}
-		if (s1 < 0 || s1 > 50 || s2 < 0 || s2 > 50 || s3 < 0 || s3 > 50)
+		if (s1 > 50 || s2 > 50 || s3 > 50)
 		{
 			System.err.println("Error: scores must be between 0 and 50!");
 			return;
